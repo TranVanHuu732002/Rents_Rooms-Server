@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
 import { v4 as uuid, v4 } from "uuid";
 import db from "../models";
-import nhachothue from "../data/nhachothue.json";
+import chothuephongtro from "../data/chothuephongtro.json";
 import generateCode from "../utils/generateCode";
 import { dataArea, dataPrice } from "../utils/data";
 import { getNumberFromString } from "../utils/common";
 require("dotenv").config();
 
-const dataBody = nhachothue.body;
+const dataBody = chothuephongtro.body;
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
@@ -34,16 +34,16 @@ export const insertService = () =>
           labelCode,
           address: item?.header?.address,
           attributesId,
-          categoryCode: "NCT",
+          categoryCode: "CTPT",
           description: JSON.stringify(item?.mainContent?.content),
           userId,
           overviewId,
           imagesId,
           areaCode: dataArea.find(
-            (area) => area.max >= currentArea && area.min <= currentArea
+            (area) => area.max > currentArea && area.min <= currentArea
           )?.code,
           priceCode: dataPrice.find(
-            (price) => price.max >= currentPrice && price.min <= currentPrice
+            (price) => price.max > currentPrice && price.min <= currentPrice
           )?.code,
         });
 

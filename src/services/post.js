@@ -38,12 +38,12 @@ export const getPostsService = () =>
 export const getPostsLimitService = (page, query) =>
   new Promise(async (resolve, reject) => {
     try {
-      let offset = (!page || +page <= 1) ? 0 : (+page - 1)
+      let offset = !page || +page <= 1 ? 0 : +page - 1;
       const response = await db.Post.findAndCountAll({
         where: query,
         raw: true,
         nest: true,
-        offset: offset * +process.env.LIMIT ,
+        offset: offset * +process.env.LIMIT,
         limit: +process.env.LIMIT,
         include: [
           {
@@ -63,6 +63,39 @@ export const getPostsLimitService = (page, query) =>
           },
         ],
         attributes: ["id", "title", "star", "address", "description"],
+      });
+      resolve({
+        err: response ? 0 : 1,
+        msg: response ? "OK" : "Failed to get posts.",
+        response,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+// Theo thoi gian moi nhat
+export const getNewPostsService = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.Post.findAll({
+        raw: true,
+        nest: true,
+        offset: 0,
+        order: [["createdAt", "DESC"]],
+        limit: +process.env.LIMIT,
+        include: [
+          {
+            model: db.Image,
+            as: "images",
+            attributes: ["image"],
+          },
+          {
+            model: db.Attribute,
+            as: "attributes",
+            attributes: ["price", "acreage", "published", "hashtag"],
+          },
+        ],
+        attributes: ["id", "title", "star", "createdAt"],
       });
       resolve({
         err: response ? 0 : 1,

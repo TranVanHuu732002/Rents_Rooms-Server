@@ -2,9 +2,9 @@ import authRouter from "./auth";
 import insertRouter from "./insert.js";
 import categoryRouter from "./category.js";
 import postRouter from "./post.js";
-import priceRouter from './price.js'
-import areaRouter from './area.js'
-
+import priceRouter from "./price.js";
+import areaRouter from "./area.js";
+import provinceRouter from "./province.js";
 
 const initRoutes = (app) => {
   app.use("/api/v1/auth", authRouter);
@@ -13,7 +13,7 @@ const initRoutes = (app) => {
   app.use("/api/v1/post", postRouter);
   app.use("/api/v1/price", priceRouter);
   app.use("/api/v1/area", areaRouter);
-
+  app.use("/api/v1/province", provinceRouter);
 
   return app.use("/", (req, res) => {
     res.send("server on ....");

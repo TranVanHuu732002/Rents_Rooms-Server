@@ -48,6 +48,12 @@ module.exports = {
       imagesId: {
         type: Sequelize.STRING,
       },
+      priceNumber: {
+        type: Sequelize.INTEGER,
+      },
+      areaNumber: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

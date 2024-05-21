@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.STRING,
     overviewId: DataTypes.STRING,
     imagesId: DataTypes.STRING,
-
+    priceNumber: DataTypes.INTEGER,
+    areaNumber: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Post',

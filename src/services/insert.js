@@ -7,7 +7,7 @@ import chothuephongtro from "../data/chothuephongtro.json";
 import nhachothue from "../data/nhachothue.json";
 import generateCode from "../utils/generateCode";
 import { dataArea, dataPrice } from "../utils/data";
-import { getNumberFromString } from "../utils/common";
+import { getNumberFromString, getNumberFromStringV2 } from "../utils/common";
 require("dotenv").config();
 
 const dataBody = [
@@ -86,8 +86,8 @@ export const insertService = () =>
               (price) => price.max > currentPrice && price.min <= currentPrice
             )?.code,
             provinceCode,
-            priceNumber: currentPrice,
-            areaNumber: currentArea,
+            priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
+            areaNumber: getNumberFromStringV2(item?.header?.attributes?.acreage),
           });
 
           await db.Attribute.create({

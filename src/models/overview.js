@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     target: DataTypes.STRING,
     bouns: DataTypes.STRING,
-    created: DataTypes.DATE,
-    expire: DataTypes.DATE,
+    created: DataTypes.STRING,
+    expired: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Overview',

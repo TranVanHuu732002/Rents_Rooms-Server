@@ -3,6 +3,7 @@ import db from "../models";
 import { v4 as uuid } from "uuid";
 import moment from "moment";
 import generateCode from "../utils/generateCode";
+import generateDate from "../utils/generateDate";
 
 export const getPostsService = () =>
   new Promise(async (resolve, reject) => {
@@ -129,7 +130,7 @@ export const createNewPostService = (body, userId) =>
       const overviewId = uuid();
       const labelCode = generateCode(body.label);
       const hashtag = `${Math.floor(Math.random() * Math.pow(10, 6))}`;
-      const currentDate = new Date();
+      const currentDate = generateDate();
       await db.Post.create({
         id: uuid(),
         title: body.title,
@@ -170,8 +171,8 @@ export const createNewPostService = (body, userId) =>
         type: body?.category,
         target: body?.target,
         bouns: "Tin thường",
-        created: currentDate,
-        expire: new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000),
+        created: currentDate.today,
+        expired: currentDate.expireDay,
       });
 
       await db.Province.findOrCreate({

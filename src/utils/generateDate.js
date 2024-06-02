@@ -1,9 +1,12 @@
 import moment from "moment";
-
+const addZero = (i) => {
+  if (i < 10) {i = "0" + i}
+  return i;
+}
 const formatDate = (timeObj) => {
   let day = timeObj.getDay() === 0 ? "Chủ nhật" : `Thứ ${timeObj.getDay() + 1}`;
   let date = `${timeObj.getDate()}/${timeObj.getMonth() + 1}/${timeObj.getFullYear()}`;
-  let time = `${timeObj.getHours()}:${timeObj.getMinutes() + 1}`;
+  let time = `${addZero(timeObj.getHours())}:${addZero(timeObj.getMinutes() + 1)}`;
   return `${day}, ${time} ${date}`;
 };
 

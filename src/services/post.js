@@ -42,23 +42,24 @@ export const getPostsService = () =>
 // Phan trang,theo gia, dien tiich
 export const getPostsLimitService = (
   page,
-  query,
+  { limitPost, order, ...query },
   { priceNumber, areaNumber }
 ) =>
   new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
       const queries = { ...query };
-      if (priceNumber) queries.priceNumber = { [Op.between]: priceNumber };
-      if (areaNumber) queries.areaNumber = { [Op.between]: areaNumber };
-
+      const limit = +limitPost || +process.env.LIMIT;
+      queries.limit = limit;
+      if (priceNumber) query.priceNumber = { [Op.between]: priceNumber };
+      if (areaNumber) query.areaNumber = { [Op.between]: areaNumber };
+      if (order) queries.order = [order];
       const response = await db.Post.findAndCountAll({
-        where: queries,
+        where: query,
         raw: true,
         nest: true,
         offset: offset * +process.env.LIMIT,
-        order: [["createdAt", "DESC"]],
-        limit: +process.env.LIMIT,
+        ...queries,
         include: [
           {
             model: db.Image,
@@ -73,7 +74,15 @@ export const getPostsLimitService = (
           {
             model: db.User,
             as: "user",
-            attributes: ["name", "zalo", "phone"],
+            attributes: ["name", "zalo", "phone", "avatar"],
+          },
+          {
+            model: db.Overview,
+            as: "overviews",
+          },
+          {
+            model: db.Label,
+            as: "labels",
           },
         ],
         attributes: ["id", "title", "star", "address", "description"],

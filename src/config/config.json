@@ -1,24 +1,30 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "rent_room",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "logging": false
-  },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "db_rentroom_user",
+    "password": "4ZlYiSRKOYA1yxyOo9pv9r3AQSUvXMJA",
+    "database": "db_rentroom",
+    "host": "dpg-cpk53gmd3nmc73fojvqg-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "logging": false,
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "db_rentroom_user",
+    "password": "4ZlYiSRKOYA1yxyOo9pv9r3AQSUvXMJA",
+    "database": "db_rentroom",
+    "host": "dpg-cpk53gmd3nmc73fojvqg-a.singapore-postgres.render.com",
+    "dialect": "postgres",
+    "logging": false,
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }

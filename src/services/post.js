@@ -153,8 +153,8 @@ export const createNewPostService = (body, userId) =>
         imagesId,
         areaCode: body.areaCode || null,
         priceCode: body.priceCode || null,
-        provinceCode: body?.province?.includes("Thành phố")
-          ? generateCode(body?.province?.replace("Thành phố ", ""))
+        provinceCode: body?.province?.includes("TP.")
+          ? generateCode(body?.province?.replace("TP. ", ""))
           : generateCode(body?.province?.replace("Tỉnh ", "")) || null,
         priceNumber: body.priceNumber,
         areaNumber: body.areaNumber,
@@ -187,16 +187,16 @@ export const createNewPostService = (body, userId) =>
       await db.Province.findOrCreate({
         where: {
           [Op.or]: [
-            { value: body?.province.replace("Thành phố ", "") },
+            { value: body?.province.replace("TP. ", "") },
             { value: body?.province.replace("Tỉnh ", "") },
           ],
         },
         defaults: {
-          code: body?.province?.includes("Thành phố")
-            ? generateCode(body?.province?.replace("Thành phố ", ""))
+          code: body?.province?.includes("TP.")
+            ? generateCode(body?.province?.replace("TP. ", ""))
             : generateCode(body?.province?.replace("Tỉnh ", "")),
-          value: body?.province?.includes("Thành phố")
-            ? body?.province?.replace("Thành phố ", "")
+          value: body?.province?.includes("TP.")
+            ? body?.province?.replace("TP. ", "")
             : body?.province?.replace("Tỉnh ", ""),
         },
       });
@@ -222,16 +222,16 @@ export const createNewPostService = (body, userId) =>
 export const getPostsLimitAdminService = (page, id, query) =>
   new Promise(async (resolve, reject) => {
     try {
-      let offset = !page || +page <= 1 ? 0 : +page - 1;
+      // let offset = !page || +page <= 1 ? 0 : +page - 1;
       const queries = { ...query, userId: id };
 
       const response = await db.Post.findAndCountAll({
         where: queries,
         raw: true,
         nest: true,
-        offset: offset * +process.env.LIMIT,
+        // offset: offset * +process.env.LIMIT,
         order: [["createdAt", "DESC"]],
-        limit: +process.env.LIMIT,
+        // limit: 10,
         include: [
           {
             model: db.Image,
@@ -285,8 +285,8 @@ export const upDatePostService = ({
           description: JSON.stringify(body.description) || null,
           areaCode: body.areaCode || null,
           priceCode: body.priceCode || null,
-          provinceCode: body?.province?.includes("Thành phố")
-            ? generateCode(body?.province?.replace("Thành phố ", ""))
+          provinceCode: body?.province?.includes("TP.")
+            ? generateCode(body?.province?.replace("TP. ", ""))
             : generateCode(body?.province?.replace("Tỉnh ", "")) || null,
           priceNumber: body.priceNumber,
           areaNumber: body.areaNumber,
@@ -323,16 +323,16 @@ export const upDatePostService = ({
       await db.Province.findOrCreate({
         where: {
           [Op.or]: [
-            { value: body?.province.replace("Thành phố ", "") },
+            { value: body?.province.replace("TP. ", "") },
             { value: body?.province.replace("Tỉnh ", "") },
           ],
         },
         defaults: {
-          code: body?.province?.includes("Thành phố")
-            ? generateCode(body?.province?.replace("Thành phố ", ""))
+          code: body?.province?.includes("TP.")
+            ? generateCode(body?.province?.replace("TP. ", ""))
             : generateCode(body?.province?.replace("Tỉnh ", "")),
-          value: body?.province?.includes("Thành phố")
-            ? body?.province?.replace("Thành phố ", "")
+          value: body?.province?.includes("TP.")
+            ? body?.province?.replace("TP. ", "")
             : body?.province?.replace("Tỉnh ", ""),
         },
       });
